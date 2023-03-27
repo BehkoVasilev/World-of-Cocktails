@@ -33,15 +33,17 @@ export const Catalog = ({
         
         if (!cocktail.likedUsers.includes(userId)) {
             const newCocktail = { ...cocktail, likes: cocktail.likes + 1, likedUsers: [...cocktail.likedUsers, userId] };
-
-            try {
-                
-                await cocktailService.updateOne(cocktailId, newCocktail);
-            } catch (error) {
-                console.error('Error occurred while updating cocktail:', error);
-            }
-
             
+            //I lost a lot of time while reading the documentation:
+            // "Update
+            // This request requires authorization and content-type headers (see above). Only the owner of the resource can edit it."
+
+            // try {    
+            //     await cocktailService.updateOne(cocktailId, newCocktail);
+            // } catch (error) {
+            //     console.error('Error occurred while updating cocktail:', error);
+            // }
+
             setUpdatedCocktails(
                 updatedCocktails.map((c) => (c._id === cocktailId ? newCocktail : c))
             );
