@@ -14,6 +14,7 @@ import { Register } from "./components/Register/Register";
 import { AuthContext } from "./contexts/AuthContext";
 import { Logout } from "./components/Logout/Logout";
 import { Details } from "./components/Details/Details";
+import { Edit } from "./components/Edit/Edit";
 
 function App() {
   const [cocktails, setCocktails] = useState([]);
@@ -66,13 +67,21 @@ function App() {
     }
   };
 
-  const onCreateCocktailSubmit = (data) => {
+  const onCreateCocktailSubmit = async (data) => {
 
-    const newCocktail = cocktailService.create(data);
+    const newCocktail = await cocktailService.create(data);
 
     setCocktails(state => [...state, newCocktail]);
 
     navigate('/catalog');
+  }
+
+  const onEditCocktailSubmit = async (data) => {
+    const editCocktail = await cocktailService.updateOne(data._id, data);
+
+    setCocktails(state => state.map(x => x._id === data._id ? editCocktail : x));
+
+    navigate(`/catalog/${data._id}`)
   }
 
   const context = {
@@ -98,6 +107,7 @@ function App() {
             <Route path='/create' element={<Create onCreateCocktailSubmit={onCreateCocktailSubmit} />} />
             <Route path='/catalog' element={<Catalog allCocktails={cocktails} />} />
             <Route path='/catalog/:cocktailId' element={<Details />} />
+            <Route path='/catalog/:cocktailId/edit' element={<Edit onEditCocktailSubmit={onEditCocktailSubmit} />} />
           </Routes>
         </div>
         <Footer />

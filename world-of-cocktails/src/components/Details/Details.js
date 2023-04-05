@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useService } from "../../hooks/useService";
 import { cocktailServiceFactory } from "../../services/cocktailService";
+import { Link } from "react-router-dom";
 // import styles from "./Details.module.css";
 
 export const Details = () => {
-    const { userId, token } = useContext(AuthContext);
+    const { userId } = useContext(AuthContext);
     const [cocktail, setCocktail] = useState({});
     const { cocktailId } = useParams();
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const Details = () => {
 
     const onDeleteClick = async () => {
         await cocktailService.deleteCocktail(cocktailId);
-        
+        // update state
         navigate('/catalog');
     }
 
@@ -39,7 +40,7 @@ export const Details = () => {
             </div>
             {cocktail._ownerId === userId && (
                 <div className="buttons">
-                    <a href="#" className="button">Edit</a>
+                    <Link to={`/catalog/${cocktailId}/edit`} className="button">Edit</Link>
                     <button className="button" onClick={onDeleteClick}>Delete</button>
                 </div>
             )}
