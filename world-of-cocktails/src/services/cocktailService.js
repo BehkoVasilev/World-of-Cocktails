@@ -21,14 +21,16 @@ export const cocktailServiceFactory = (token) => {
     };
     const create = async (data) => {
         const result = await request.post(baseUrl, { ...data, likes: 0, likedUsers: [] });
-        console.log(result);
         return result
     };
+
+    const deleteCocktail = (id) => request.delete(`${baseUrl}/${id}`)
 
     return {
         updateOne,
         getOne,
         getAll,
-        create
+        create,
+        deleteCocktail
     }
 };

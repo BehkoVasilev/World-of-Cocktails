@@ -72,7 +72,7 @@ function App() {
 
     setCocktails(state => [...state, newCocktail]);
 
-    navigate('/');
+    navigate('/catalog');
   }
 
   const context = {

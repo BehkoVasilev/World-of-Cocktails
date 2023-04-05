@@ -53,7 +53,7 @@ export const Catalog = ({
         <section className={styles["catalog-page"]}>
             <h1>All Cocktails</h1>
             {updatedCocktails.map((x) => (
-                <div className={styles["allCocktails"]} key={x._id}>
+                <div className={styles["allCocktails"]} key={x._id} >
                     <div className={styles["allCocktails-info"]}>
                         <img src={x.imageUrl} alt={x.name} />
                         <div className={styles["likes-container"]}>
