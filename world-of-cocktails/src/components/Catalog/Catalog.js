@@ -17,7 +17,7 @@ export const Catalog = ({
         allCocktails
     );
     const { token, userId } = useContext(AuthContext);
-    const cocktailService = cocktailServiceFactory(token);
+    // const cocktailService = cocktailServiceFactory(token);
 
     const handleLike = async (cocktailId) => {
         if(!userId){
