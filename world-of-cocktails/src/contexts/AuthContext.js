@@ -29,6 +29,7 @@ export const AuthProvider = ({
         await authService.logout();
 
         setAuth({});
+        localStorage.clear();
     }
 
     const onRegisterSubmit = async (data) => {
