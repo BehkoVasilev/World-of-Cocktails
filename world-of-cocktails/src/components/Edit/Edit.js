@@ -5,7 +5,7 @@ import { useService } from '../../hooks/useService';
 import { cocktailServiceFactory } from '../../services/cocktailService';
 import styles from '../Create/Create.module.css';
 
-const CreateFormKeys = {
+const EditFormKeys = {
     Name: 'name',
     Ingredients: 'ingredients',
     Preaparation: 'preparation',
@@ -21,10 +21,10 @@ export const Edit = ({
 
     const { values, changeHandler, onSubmit, changeValues } = useForm({
         _id: '',
-        [CreateFormKeys.Name]: '',
-        [CreateFormKeys.Ingredients]: '',
-        [CreateFormKeys.Preaparation]: '',
-        [CreateFormKeys.ImageUrl]: '',
+        [EditFormKeys.Name]: '',
+        [EditFormKeys.Ingredients]: '',
+        [EditFormKeys.Preaparation]: '',
+        [EditFormKeys.ImageUrl]: '',
     }, onEditCocktailSubmit);
 
     useEffect(() => {
@@ -43,9 +43,9 @@ export const Edit = ({
                     <input
                         type="text"
                         className="inputField"
-                        name={CreateFormKeys.Name}
+                        name={EditFormKeys.Name}
                         placeholder="Enter cocktail name..."
-                        value={values[CreateFormKeys.Name] || ''}
+                        value={values[EditFormKeys.Name] || ''}
                         onChange={changeHandler}
                     />
 
@@ -53,18 +53,18 @@ export const Edit = ({
                     <input
                         type="text"
                         className="inputField"
-                        name={CreateFormKeys.Ingredients}
+                        name={EditFormKeys.Ingredients}
                         placeholder="Enter products here..."
-                        value={values[CreateFormKeys.Ingredients] || ''}
+                        value={values[EditFormKeys.Ingredients] || ''}
                         onChange={changeHandler}
                     />
 
                     <label htmlFor="summary">Preparation:</label>
                     <textarea
-                        name={CreateFormKeys.Preaparation}
+                        name={EditFormKeys.Preaparation}
                         className="inputField"
                         placeholder="Enter preparation method..."
-                        value={values[CreateFormKeys.Preaparation] || ''}
+                        value={values[EditFormKeys.Preaparation] || ''}
                         onChange={changeHandler}
                     ></textarea>
 
@@ -72,9 +72,9 @@ export const Edit = ({
                     <input
                         type="text"
                         className="inputField"
-                        name={CreateFormKeys.ImageUrl}
+                        name={EditFormKeys.ImageUrl}
                         placeholder="http://..."
-                        value={values[CreateFormKeys.ImageUrl] || ''}
+                        value={values[EditFormKeys.ImageUrl] || ''}
                         onChange={changeHandler}
                     />
 

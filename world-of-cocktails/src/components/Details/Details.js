@@ -1,27 +1,54 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+
 import { AuthContext } from "../../contexts/AuthContext";
 import { useService } from "../../hooks/useService";
+import * as commentSetvice from "../../services/commentService";
 import { cocktailServiceFactory } from "../../services/cocktailService";
-import { Link } from "react-router-dom";
+
+import { AddComment } from "./AddComment/AddComment";
 // import styles from "./Details.module.css";
 
 export const Details = () => {
-    const { userId } = useContext(AuthContext);
+    const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
     const [cocktail, setCocktail] = useState({});
     const { cocktailId } = useParams();
+
     const navigate = useNavigate();
     const cocktailService = useService(cocktailServiceFactory);
 
     useEffect(() => {
-        cocktailService.getOne(cocktailId)
-            .then((data) => setCocktail(data));
+        Promise.all([
+            cocktailService.getOne(cocktailId),
+            commentSetvice.getAll(cocktailId)
+        ]).then(([cocktailData, comments]) =>
+            setCocktail({
+                ...cocktailData,
+                comments
+            }));
     }, [cocktailId]);
 
     const onDeleteClick = async () => {
         await cocktailService.deleteCocktail(cocktailId);
         // update state
         navigate('/catalog');
+    }
+
+    const onCommentSubmit = async (values) => {
+        const newComment = await commentSetvice.create(cocktailId, values.comment);
+
+        setCocktail(state => ({
+            ...state,
+            comments: [
+                ...state.comments,
+                {
+                    ...newComment,
+                    author: {
+                        email: userEmail
+                    },
+                }
+            ],
+        }))
     }
 
     return (
@@ -38,12 +65,27 @@ export const Details = () => {
                     <p>{cocktail.preparation}</p>
                 </div>
             </div>
+            <div className="comments">
+                <h2>Comments:</h2>
+                <ul>
+                    {cocktail.comments && cocktail.comments.map(x => (
+                        <li key={x._id} className="comment">
+                            <p>{x.author.email}: {x.comment}</p>
+                        </li>
+                    ))}
+                </ul>
+                {!cocktail.comments?.length && (
+                    <p className="no-comments">No comments</p>
+                )}
+            </div>
             {cocktail._ownerId === userId && (
                 <div className="buttons">
                     <Link to={`/catalog/${cocktailId}/edit`} className="button">Edit</Link>
                     <button className="button" onClick={onDeleteClick}>Delete</button>
                 </div>
             )}
+
+            {isAuthenticated && <AddComment onCommentSubmit={onCommentSubmit} />}
         </section>
     );
 };
