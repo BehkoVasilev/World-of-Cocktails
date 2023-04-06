@@ -102,7 +102,8 @@ export const Details = ({
             <div className="comments">
                 <span>Likes: {cocktail.likes || 0}</span>
                 {userId !== cocktail._ownerId && 
-                !cocktail.likedUsers.includes(userId)
+                !cocktail.likedUsers.includes(userId) &&
+                isAuthenticated
                     &&
                     <AddLike handleLike={handleLike} cocktailId={cocktailId} />}
                 <h2>Comments:</h2>
