@@ -46,6 +46,15 @@ function App() {
     navigate(`/catalog/${data._id}`)
   }
 
+  const onDeleteClick = async (cocktailId) => {
+    await cocktailService.deleteCocktail(cocktailId);
+
+    const updatedCocktails = cocktails.filter(c => c._id !== cocktailId);
+    setCocktails(updatedCocktails);
+    
+    navigate('/catalog');
+}
+
   return (
     <AuthProvider>
       <div id="templatemo_container_wrapper">
@@ -58,7 +67,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/create' element={<Create onCreateCocktailSubmit={onCreateCocktailSubmit} />} />
             <Route path='/catalog' element={<Catalog allCocktails={cocktails} />} />
-            <Route path='/catalog/:cocktailId' element={<Details />} />
+            <Route path='/catalog/:cocktailId' element={<Details onDeleteClick={onDeleteClick}/>} />
             <Route path='/catalog/:cocktailId/edit' element={<Edit onEditCocktailSubmit={onEditCocktailSubmit} />} />
           </Routes>
         </div>

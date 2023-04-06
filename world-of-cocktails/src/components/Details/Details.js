@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { useService } from "../../hooks/useService";
@@ -9,12 +9,13 @@ import { cocktailServiceFactory } from "../../services/cocktailService";
 import { AddComment } from "./AddComment/AddComment";
 // import styles from "./Details.module.css";
 
-export const Details = () => {
+export const Details = ({
+    onDeleteClick
+}) => {
     const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
     const [cocktail, setCocktail] = useState({});
     const { cocktailId } = useParams();
 
-    const navigate = useNavigate();
     const cocktailService = useService(cocktailServiceFactory);
 
     useEffect(() => {
@@ -27,12 +28,6 @@ export const Details = () => {
                 comments
             }));
     }, [cocktailId, cocktailService]);
-
-    const onDeleteClick = async () => {
-        await cocktailService.deleteCocktail(cocktailId);
-        // update state
-        navigate('/catalog');
-    }
 
     const onCommentSubmit = async (values) => {
         const newComment = await commentSetvice.create(cocktailId, values.comment);
@@ -49,6 +44,10 @@ export const Details = () => {
                 }
             ],
         }))
+    };
+
+    const handleDeleteClick = async () => {
+        await onDeleteClick(cocktailId);
     }
 
     return (
@@ -65,7 +64,7 @@ export const Details = () => {
                     <p>{cocktail.preparation}</p>
                 </div>
             </div>
-            
+
             <div className="comments">
                 <h2>Comments:</h2>
                 <ul>
@@ -82,7 +81,7 @@ export const Details = () => {
             {cocktail._ownerId === userId && (
                 <div className="buttons">
                     <Link to={`/catalog/${cocktailId}/edit`} className="button">Edit</Link>
-                    <button className="button" onClick={onDeleteClick}>Delete</button>
+                    <button className="button" onClick={handleDeleteClick}>Delete</button>
                 </div>
             )}
 
