@@ -20,7 +20,7 @@ export const cocktailServiceFactory = (token) => {
         return Object.values(response);
     };
     const create = async (data) => {
-        const result = await request.post(baseUrl, { ...data, likes: 0, likedUsers: [] });
+        const result = await request.post(baseUrl, data);
         return result
     };
 

@@ -4,16 +4,21 @@ import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useService } from "../../hooks/useService";
 import * as commentSetvice from "../../services/commentService";
+import * as likeService from "../../services/likeService";
 import { cocktailServiceFactory } from "../../services/cocktailService";
 
 import { AddComment } from "./AddComment/AddComment";
+import { AddLike } from "./AddLike/AddLike";
 // import styles from "./Details.module.css";
 
 export const Details = ({
     onDeleteClick
 }) => {
     const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
-    const [cocktail, setCocktail] = useState({});
+    const [cocktail, setCocktail] = useState({
+        likes: 0,
+        likedUsers: []
+    });
     const { cocktailId } = useParams();
 
     const cocktailService = useService(cocktailServiceFactory);
@@ -21,13 +26,18 @@ export const Details = ({
     useEffect(() => {
         Promise.all([
             cocktailService.getOne(cocktailId),
-            commentSetvice.getAll(cocktailId)
-        ]).then(([cocktailData, comments]) =>
-            setCocktail({
-                ...cocktailData,
-                comments
-            }));
-    }, [cocktailId, cocktailService]);
+            commentSetvice.getAll(cocktailId),
+            likeService.getAll(cocktailId),
+        ])
+            .then(([cocktailData, comments, likes]) =>
+                setCocktail({
+                    ...cocktailData,
+                    comments,
+                    likes: likes.length,
+                    likedUsers: likes.map((like) => like._ownerId),
+                })
+            )
+    }, [cocktailId]);
 
     const onCommentSubmit = async (values) => {
         const newComment = await commentSetvice.create(cocktailId, values.comment);
@@ -44,6 +54,30 @@ export const Details = ({
                 }
             ],
         }))
+    };
+
+    const handleLike = async () => {
+        if (!userId) {
+            return;
+        }
+
+        if (cocktail.likedUsers.includes(userId)) {
+            return;
+        }
+
+        try {
+            await likeService.create(cocktailId);
+
+            const updatedCocktail = {
+                ...cocktail,
+                likes: cocktail.likes + 1,
+                likedUsers: [...cocktail.likedUsers, userId],
+            };
+
+            setCocktail(updatedCocktail);
+        } catch (error) {
+            console.error("Error occurred while creating like:", error);
+        }
     };
 
     const handleDeleteClick = async () => {
@@ -66,6 +100,11 @@ export const Details = ({
             </div>
 
             <div className="comments">
+                <span>Likes: {cocktail.likes || 0}</span>
+                {userId !== cocktail._ownerId && 
+                !cocktail.likedUsers.includes(userId)
+                    &&
+                    <AddLike handleLike={handleLike} cocktailId={cocktailId} />}
                 <h2>Comments:</h2>
                 <ul>
                     {cocktail.comments && cocktail.comments.map(x => (

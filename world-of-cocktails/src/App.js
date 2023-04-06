@@ -27,7 +27,7 @@ function App() {
       .then(result => {
         setCocktails(result)
       })
-  }, [cocktailService])
+  }, [])
 
   const onCreateCocktailSubmit = async (data) => {
 
@@ -51,7 +51,7 @@ function App() {
 
     const updatedCocktails = cocktails.filter(c => c._id !== cocktailId);
     setCocktails(updatedCocktails);
-    
+
     navigate('/catalog');
 }
 
@@ -66,7 +66,7 @@ function App() {
             <Route path='/logout' element={<Logout />} />
             <Route path='/register' element={<Register />} />
             <Route path='/create' element={<Create onCreateCocktailSubmit={onCreateCocktailSubmit} />} />
-            <Route path='/catalog' element={<Catalog allCocktails={cocktails} />} />
+            <Route path='/catalog' element={<Catalog cocktails={cocktails} />} />
             <Route path='/catalog/:cocktailId' element={<Details onDeleteClick={onDeleteClick}/>} />
             <Route path='/catalog/:cocktailId/edit' element={<Edit onEditCocktailSubmit={onEditCocktailSubmit} />} />
           </Routes>
