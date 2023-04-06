@@ -6,7 +6,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./Catalog.module.css";
-import { cocktailServiceFactory } from "../../services/cocktailService";
+// import { cocktailServiceFactory } from "../../services/cocktailService";
 
 library.add(faHeart);
 
@@ -16,7 +16,7 @@ export const Catalog = ({
     const [updatedCocktails, setUpdatedCocktails] = useState(
         allCocktails
     );
-    const { token, userId } = useContext(AuthContext);
+    const { userId } = useContext(AuthContext);
     // const cocktailService = cocktailServiceFactory(token);
 
     const handleLike = async (cocktailId) => {

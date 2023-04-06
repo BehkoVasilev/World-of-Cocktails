@@ -26,7 +26,7 @@ export const Details = () => {
                 ...cocktailData,
                 comments
             }));
-    }, [cocktailId]);
+    }, [cocktailId, cocktailService]);
 
     const onDeleteClick = async () => {
         await cocktailService.deleteCocktail(cocktailId);
@@ -65,6 +65,7 @@ export const Details = () => {
                     <p>{cocktail.preparation}</p>
                 </div>
             </div>
+            
             <div className="comments">
                 <h2>Comments:</h2>
                 <ul>

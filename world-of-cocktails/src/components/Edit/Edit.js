@@ -31,7 +31,7 @@ export const Edit = ({
         cocktailService.getOne(cocktailId)
             .then(res => 
                 changeValues(res));
-    }, [cocktailId])
+    }, [cocktailId, changeValues, cocktailService])
 
     return (
         <section id="create-page" className={styles.createForm}>

@@ -14,7 +14,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { Logout } from "./components/Logout/Logout";
 import { Details } from "./components/Details/Details";
 import { Edit } from "./components/Edit/Edit";
-import { useService } from "./hooks/useService";
+// import { useService } from "./hooks/useService";
 
 function App() {
   const [cocktails, setCocktails] = useState([]);
@@ -27,7 +27,7 @@ function App() {
       .then(result => {
         setCocktails(result)
       })
-  }, [])
+  }, [cocktailService])
 
   const onCreateCocktailSubmit = async (data) => {
 
