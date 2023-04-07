@@ -10,6 +10,7 @@ export const getAll = async (cocktailId) => {
 };
 
 export const create = async (cocktailId) => {
-    const result = await request.post(baseUrl, {cocktailId});
+    const result = await request.post(baseUrl, { cocktailId });
+    console.log(result);
     return result;
 };

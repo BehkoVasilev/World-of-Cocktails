@@ -38,6 +38,7 @@ export const Details = ({
                 })
             )
     }, [cocktailId]);
+    console.log(cocktail);
 
     const onCommentSubmit = async (values) => {
         const newComment = await commentSetvice.create(cocktailId, values.comment);
@@ -100,7 +101,7 @@ export const Details = ({
             </div>
 
             <div className="comments">
-                <span>Likes: {cocktail.likes || 0}</span>
+                <span>{cocktail.likes || 0} Likes</span>
                 {userId !== cocktail._ownerId && 
                 !cocktail.likedUsers.includes(userId) &&
                 isAuthenticated
