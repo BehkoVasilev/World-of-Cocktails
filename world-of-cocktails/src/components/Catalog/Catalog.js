@@ -6,6 +6,7 @@ import styles from "./Catalog.module.css";
 
 export const Catalog = ({ cocktails }) => {
     const [cocktailsWithLikes, setCocktailsWithLikes] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const getLikesForCocktail = (cocktail) => {
@@ -26,10 +27,22 @@ export const Catalog = ({ cocktails }) => {
             });
     }, [cocktails]);
 
+    const filteredCocktails = cocktailsWithLikes.filter((cocktail) =>
+        cocktail.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <section className={styles["catalog-page"]}>
             <h1>All Cocktails</h1>
-            {cocktailsWithLikes.map((x) => (
+            <div className={styles["search-bar"]}>
+                <input
+                    type="text"
+                    placeholder="Search cocktails..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
+            {filteredCocktails.map((x) => (
                 <div className={styles["allCocktails"]} key={x._id}>
                     <div className={styles["allCocktails-info"]}>
                         <img src={x.imageUrl} alt={x.name} />
@@ -45,7 +58,7 @@ export const Catalog = ({ cocktails }) => {
                     </div>
                 </div>
             ))}
-            {cocktailsWithLikes.length === 0 && (
+            {filteredCocktails.length === 0 && (
                 <h3 className={styles["no-articles"]}>No articles yet</h3>
             )}
         </section>
