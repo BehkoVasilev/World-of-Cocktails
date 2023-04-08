@@ -1,6 +1,5 @@
 const request = async (method, token, url, data) => {
     const options = {};
-
     if (method !== 'GET') {
         options.method = method;
 
@@ -27,6 +26,10 @@ const request = async (method, token, url, data) => {
             return {}
         }
 
+        if (response.status === 404) {
+            return []
+        }
+
         if (!response.ok) {
             const errorResponse = await response.json();
             throw errorResponse;
@@ -40,7 +43,7 @@ const request = async (method, token, url, data) => {
 };
 
 export const requestFactory = (token) => {
-    if(!token) {
+    if (!token) {
         const serializedAuth = localStorage.getItem('auth');
 
         if (serializedAuth) {

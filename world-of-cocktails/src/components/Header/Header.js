@@ -23,7 +23,7 @@ export const Header = () => {
                     {isAuthenticated ? (
                         <>
                             <li>
-                                <Link to="/create">Create Cocktail</Link>
+                                <Link to="/create" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Add Cocktail</Link>
                             </li>
                             <li className="user-email">{userEmail}</li>
                             <li>
@@ -36,7 +36,7 @@ export const Header = () => {
                                 <Link to="/login" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Login</Link>
                             </li>
                             <li>
-                                <Link to="/register" onClick={(e) => {e.stopPropagation(); if (!showForm) setShowForm(true)}}>Register</Link>
+                                <Link to="/register" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Register</Link>
                             </li>
                         </>
                     )}

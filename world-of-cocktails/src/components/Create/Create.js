@@ -1,3 +1,8 @@
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from '../../hooks/useForm';
 import styles from './Create.module.css';
 
@@ -11,6 +16,8 @@ const CreateFormKeys = {
 export const Create = ({
     onCreateCocktailSubmit
 }) => {
+    const {showForm, setShowForm} = useContext(AuthContext);
+
     const { values, changeHandler, onSubmit } = useForm({
         [CreateFormKeys.Name]: '',
         [CreateFormKeys.Ingredients]: '',
@@ -18,9 +25,27 @@ export const Create = ({
         [CreateFormKeys.ImageUrl]: '',
     }, onCreateCocktailSubmit);
 
+    const createFormRef = useRef();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if(createFormRef.current && !createFormRef.current.contains(e.target)){
+                setShowForm(!showForm);
+                navigate('/');
+            };
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        }
+    })
+
     return (
         <section id="create-page" className={styles.createForm}>
-            <form className="create" method="POST" onSubmit={onSubmit}>
+            <form className="create" method="POST" onSubmit={onSubmit} ref={createFormRef}>
                 <div className="container">
                     <h1>Make a cocktail</h1>
 

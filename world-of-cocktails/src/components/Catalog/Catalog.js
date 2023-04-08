@@ -11,7 +11,7 @@ export const Catalog = ({ cocktails }) => {
     useEffect(() => {
         const getLikesForCocktail = (cocktail) => {
             return likeService.getAll(cocktail._id);
-        };
+        }
 
         Promise.all(cocktails.map(getLikesForCocktail))
             .then((likesData) => {
@@ -47,7 +47,7 @@ export const Catalog = ({ cocktails }) => {
                     <div className={styles["allCocktails-info"]}>
                         <img src={x.imageUrl} alt={x.name} />
                         <h3>{x.name}</h3>
-                        <span>{x.likes.length} Likes</span>
+                        <span>{x.likes ? x.likes.length : "0"} Likes</span>
                         <Link
                             to={`/catalog/${x._id}`}
                             className={styles["details-button"]}

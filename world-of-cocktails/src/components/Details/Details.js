@@ -9,7 +9,6 @@ import { cocktailServiceFactory } from "../../services/cocktailService";
 
 import { AddComment } from "./AddComment/AddComment";
 import { AddLike } from "./AddLike/AddLike";
-// import styles from "./Details.module.css";
 
 export const Details = ({
     onDeleteClick
@@ -38,7 +37,6 @@ export const Details = ({
                 })
             )
     }, [cocktailId]);
-    console.log(cocktail);
 
     const onCommentSubmit = async (values) => {
         const newComment = await commentSetvice.create(cocktailId, values.comment);
