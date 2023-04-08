@@ -36,7 +36,7 @@ export const Header = () => {
                                 <Link to="/login" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Login</Link>
                             </li>
                             <li>
-                                <Link to="/register">Register</Link>
+                                <Link to="/register" onClick={(e) => {e.stopPropagation(); if (!showForm) setShowForm(true)}}>Register</Link>
                             </li>
                         </>
                     )}

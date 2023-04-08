@@ -1,6 +1,6 @@
 import styles from './Register.module.css';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from '../../hooks/useForm';
 
@@ -11,16 +11,35 @@ const RegisterFormKeys = {
 }
 
 export const Register = () => {
-    const { onRegisterSubmit } = useContext(AuthContext);
+    const { onRegisterSubmit, showForm, setShowForm } = useContext(AuthContext);
+
     const { values, changeHandler, onSubmit } = useForm({
         [RegisterFormKeys.Email]: '',
         [RegisterFormKeys.Password]: '',
         [RegisterFormKeys.RePassword]: '',
     }, onRegisterSubmit)
 
+    const registerFormRef = useRef();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (registerFormRef.current && !registerFormRef.current.contains(e.target)) {
+                setShowForm(!showForm);
+                navigate('/');
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    }, [registerFormRef])
+
     return (
         <div className={styles.registerForm}>
-            <form method="POST" onSubmit={onSubmit}>
+            <form method="POST" onSubmit={onSubmit} ref={registerFormRef}>
                 <h3>Register Here</h3>
 
                 <label htmlFor="username">Email</label>
