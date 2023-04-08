@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { authServiceFactory } from '../services/authService';
@@ -9,6 +9,8 @@ export const AuthProvider = ({
     children,
 }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
+
+    const [showForm, setShowForm] = useState(true);
 
     const authService = authServiceFactory(auth.accessToken);
     const navigate = useNavigate();
@@ -58,6 +60,8 @@ export const AuthProvider = ({
         token: auth.accessToken,
         userEmail: auth.email,
         isAuthenticated: !!auth.accessToken,
+        showForm,
+        setShowForm,
     }
 
     return (

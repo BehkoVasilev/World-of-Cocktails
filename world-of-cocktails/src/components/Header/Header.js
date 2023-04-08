@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 // import "./Header.css";
 
 export const Header = () => {
-    const { isAuthenticated, userEmail } = useContext(AuthContext);
+    const { isAuthenticated, userEmail, setShowForm, showForm } = useContext(AuthContext);
 
     return (
         <header id="templatemo_header">
@@ -33,7 +33,7 @@ export const Header = () => {
                     ) : (
                         <>
                             <li>
-                                <Link to="/login">Login</Link>
+                                <Link to="/login" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Login</Link>
                             </li>
                             <li>
                                 <Link to="/register">Register</Link>
