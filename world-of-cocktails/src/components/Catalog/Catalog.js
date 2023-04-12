@@ -9,6 +9,9 @@ export const Catalog = ({ cocktails }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
+        if (!cocktails) {
+            return;
+        }
         const getLikesForCocktail = (cocktail) => {
             return likeService.getAll(cocktail._id);
         }
@@ -27,9 +30,15 @@ export const Catalog = ({ cocktails }) => {
             });
     }, [cocktails]);
 
-    const filteredCocktails = cocktailsWithLikes.filter((cocktail) =>
-        cocktail.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    let filteredCocktails = [];
+
+    if (cocktailsWithLikes.length === 0) {
+        filteredCocktails = [];
+    } else {
+        filteredCocktails = cocktailsWithLikes.filter((cocktail) =>
+            cocktail.name.toLowerCase().includes(searchQuery && searchQuery.toLowerCase())
+        );
+    }
 
     return (
         <section className={styles["catalog-page"]}>
@@ -42,25 +51,26 @@ export const Catalog = ({ cocktails }) => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
             </div>
-            {filteredCocktails.map((x) => (
-                <div className={styles["allCocktails"]} key={x._id}>
-                    <div className={styles["allCocktails-info"]}>
-                        <img src={x.imageUrl} alt={x.name} />
-                        <h3>{x.name}</h3>
-                        <span>{x.likes ? x.likes.length : "0"} Likes</span>
-                        <Link
-                            to={`/catalog/${x._id}`}
-                            className={styles["details-button"]}
-                            id="details-button"
-                        >
-                            Details
-                        </Link>
+            {filteredCocktails.length > 0 ? (
+                filteredCocktails.map((x) => (
+                    <div className={styles["allCocktails"]} key={x._id}>
+                        <div className={styles["allCocktails-info"]}>
+                            <img src={x.imageUrl} alt={x.name} />
+                            <h3>{x.name}</h3>
+                            <span>{x.likes ? x.likes.length : "0"} Likes</span>
+                            <Link
+                                to={`/catalog/${x._id}`}
+                                className={styles["details-button"]}
+                                id="details-button"
+                            >
+                                Details
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            ))}
-            {filteredCocktails.length === 0 && (
+                ))
+            ) : (
                 <h3 className={styles["no-articles"]}>No articles yet</h3>
             )}
         </section>
-    );
-};
+    )
+}

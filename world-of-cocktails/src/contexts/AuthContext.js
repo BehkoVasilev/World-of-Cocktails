@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { authServiceFactory } from '../services/authService';
@@ -62,7 +62,7 @@ export const AuthProvider = ({
         isAuthenticated: !!auth.accessToken,
         showForm,
         setShowForm,
-    }
+    };
 
     return (
 
@@ -72,4 +72,4 @@ export const AuthProvider = ({
             </AuthContext.Provider>
         </>
     )
-}
+};

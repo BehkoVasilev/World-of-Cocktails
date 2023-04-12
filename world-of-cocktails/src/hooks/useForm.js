@@ -1,7 +1,22 @@
 import { useState } from "react";
 
 export const useForm = (initialValues, onSubmitHandler) => {
-    const [values, setValues] = useState({initialValues});
+    const [values, setValues] = useState(initialValues);
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        const validationErrors = {};
+        Object.entries(values).forEach(([key, value]) => {
+            if (!value) {
+                validationErrors[key] = `${key} is required`;
+            }
+        });
+        return validationErrors;
+    };
+
+    const isValid = (validationErrors) => {
+        return Object.keys(validationErrors).length === 0;
+    };
 
     const changeHandler = (e) => {
         setValues(state => ({...state, [e.target.name]: e.target.value}));
@@ -10,9 +25,13 @@ export const useForm = (initialValues, onSubmitHandler) => {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        onSubmitHandler(values);
+        const validationErrors = validateForm();
+        setErrors(validationErrors);
 
-        setValues(initialValues);
+        if (isValid(validationErrors)) {
+            onSubmitHandler(values);
+            setValues(initialValues);
+        }
     }
 
     const changeValues = (newValues) => {
@@ -23,6 +42,7 @@ export const useForm = (initialValues, onSubmitHandler) => {
         values,
         changeHandler,
         onSubmit,
-        changeValues
+        changeValues,
+        errors
     }
 }
