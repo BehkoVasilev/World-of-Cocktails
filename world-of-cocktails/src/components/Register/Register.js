@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from '../../hooks/useForm';
 
-const RegisterFormKeys = {
+export const RegisterFormKeys = {
     Email: 'email',
     Password: 'password',
     RePassword: 'repassword',
@@ -13,7 +13,7 @@ const RegisterFormKeys = {
 export const Register = () => {
     const { onRegisterSubmit, showForm, setShowForm } = useContext(AuthContext);
 
-    const { values, changeHandler, onSubmit } = useForm({
+    const { values, changeHandler, onSubmit, errors } = useForm({
         [RegisterFormKeys.Email]: '',
         [RegisterFormKeys.Password]: '',
         [RegisterFormKeys.RePassword]: '',
@@ -51,6 +51,7 @@ export const Register = () => {
                     value={values[RegisterFormKeys.Email] || ''}
                     onChange={changeHandler}
                 />
+                {errors[RegisterFormKeys.Email] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.Email]}</span>}
 
                 <label htmlFor="password">Password</label>
                 <input
@@ -61,6 +62,8 @@ export const Register = () => {
                     value={values[RegisterFormKeys.Password] || ''}
                     onChange={changeHandler}
                 />
+                {errors[RegisterFormKeys.Password] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.Password]}</span>}
+
 
                 <label htmlFor="password">Confirm Password</label>
                 <input
@@ -71,6 +74,8 @@ export const Register = () => {
                     value={values[RegisterFormKeys.RePassword] || ''}
                     onChange={changeHandler}
                 />
+                {errors[RegisterFormKeys.RePassword] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.RePassword]}</span>}
+
 
                 <button>Register</button>
                 <div className="field">

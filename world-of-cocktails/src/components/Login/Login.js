@@ -14,7 +14,7 @@ export const Login = () => {
 
     const navigate = useNavigate();
 
-    const { values, changeHandler, onSubmit } = useForm(
+    const { values, changeHandler, onSubmit, errors } = useForm(
         {
             [LoginFormKeys.Email]: '',
             [LoginFormKeys.Password]: '',
@@ -54,6 +54,7 @@ export const Login = () => {
                         value={values[LoginFormKeys.Email] || ''}
                         onChange={changeHandler}
                     />
+                    {errors[LoginFormKeys.Email] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[LoginFormKeys.Email]}</span>}
 
                     <label htmlFor="password">Password</label>
                     <input
@@ -64,6 +65,7 @@ export const Login = () => {
                         value={values[LoginFormKeys.Password] || ''}
                         onChange={changeHandler}
                     />
+                    {errors[LoginFormKeys.Password] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[LoginFormKeys.Password]}</span>}
 
                     <button>Log In</button>
                     <p className="field">

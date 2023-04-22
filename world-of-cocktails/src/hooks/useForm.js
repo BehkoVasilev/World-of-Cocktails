@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RegisterFormKeys } from '../components/Register/Register';
 
 export const useForm = (initialValues, onSubmitHandler) => {
     const [values, setValues] = useState(initialValues);
@@ -6,9 +7,12 @@ export const useForm = (initialValues, onSubmitHandler) => {
 
     const validateForm = () => {
         const validationErrors = {};
+        if (values.password !== values.repassword) {
+            validationErrors[RegisterFormKeys.RePassword] = 'Passwords do not match';
+        }
         Object.entries(values).forEach(([key, value]) => {
             if (!value) {
-                validationErrors[key] = `${key} is required`;
+                validationErrors[key] = `The input field "${key.charAt(0).toUpperCase() + key.slice(1)}" is required!`;
             }
         });
         return validationErrors;
@@ -19,7 +23,7 @@ export const useForm = (initialValues, onSubmitHandler) => {
     };
 
     const changeHandler = (e) => {
-        setValues(state => ({...state, [e.target.name]: e.target.value}));
+        setValues(state => ({ ...state, [e.target.name]: e.target.value }));
     };
 
     const onSubmit = (e) => {
