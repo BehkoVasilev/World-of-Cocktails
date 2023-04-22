@@ -52,10 +52,11 @@
     transition: all 0.2s ease-in-out;
 }
 #catalog #details-button {
-    color: rgba(255, 255, 255, 0.07);
+    color: rgba(37, 32, 32, 0.808);
 }
 
 .details-button:hover {
-    background-color: #0062cc;
+    background-color: #cc6d00;
+    color: white;
     cursor: pointer;
 }

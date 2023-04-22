@@ -61,6 +61,7 @@ export const Catalog = ({ cocktails }) => {
                             <Link
                                 to={`/catalog/${x._id}`}
                                 className={styles["details-button"]}
+                                style={{color: 'rgba(37, 32, 32, 0.808)'}}
                                 id="details-button"
                             >
                                 Details

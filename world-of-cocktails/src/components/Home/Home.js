@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+
 export const Home = () => {
+    const { showForm, setShowForm } = useContext(AuthContext);
     return (
         <div id="templatemo_content">
             <h1 className="title">Share Your Favorite Cocktail</h1>
@@ -18,7 +23,7 @@ export const Home = () => {
                     The ones with the most likes will be in the running for the grand prize.
                 </p>
 
-                <a className="button" href="/register">Register Now</a>
+                <Link className="button" to="/register" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>Register Now</Link>
             </div>
         </div>
     );

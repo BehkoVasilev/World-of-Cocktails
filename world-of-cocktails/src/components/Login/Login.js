@@ -40,9 +40,9 @@ export const Login = () => {
     }, [loginFormRef]);
 
     return (
-        <div className={styles.loginForm}>
+        <div className={styles.loginForm} ref={loginFormRef}>
             {showForm && (
-                <form method='POST' onSubmit={onSubmit} ref={loginFormRef}>
+                <form method='POST' onSubmit={onSubmit}>
                     <h3>Login</h3>
 
                     <label htmlFor="username">Email</label>
@@ -67,7 +67,7 @@ export const Login = () => {
 
                     <button>Log In</button>
                     <p className="field">
-                        <span>If you don't have profile click <Link to="/register">here</Link></span>
+                        <span>If you don't have profile click <Link to="/register" onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>here</Link></span>
                     </p>
                 </form>
             )}

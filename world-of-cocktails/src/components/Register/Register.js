@@ -38,8 +38,8 @@ export const Register = () => {
     }, [registerFormRef])
 
     return (
-        <div className={styles.registerForm}>
-            <form method="POST" onSubmit={onSubmit} ref={registerFormRef}>
+        <div className={styles.registerForm} ref={registerFormRef}>
+            <form method="POST" onSubmit={onSubmit}>
                 <h3>Register Here</h3>
 
                 <label htmlFor="username">Email</label>
@@ -73,9 +73,11 @@ export const Register = () => {
                 />
 
                 <button>Register</button>
-                <p className="field">
-                    <span>You already have a profile click <Link to="/login">here</Link></span>
-                </p>
+                <div className="field">
+                    <p >
+                        You already have a profile click <Link to='/login' onClick={(e) => { e.stopPropagation(); if (!showForm) setShowForm(true) }}>here</Link>
+                    </p>
+                </div>
             </form>
         </div>
     );
