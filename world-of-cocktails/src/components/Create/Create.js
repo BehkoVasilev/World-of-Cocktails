@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from '../../hooks/useForm';
 import styles from './Create.module.css';
+import { CocktailContext } from '../../contexts/CocktailContext';
 
 const CreateFormKeys = {
     Name: 'name',
@@ -13,11 +14,9 @@ const CreateFormKeys = {
     ImageUrl: 'imageUrl',
 }
 
-export const Create = ({
-    onCreateCocktailSubmit
-}) => {
+export const Create = () => {
     const { showForm, setShowForm } = useContext(AuthContext);
-
+    const { onCreateCocktailSubmit } = useContext(CocktailContext);
     const { values, changeHandler, onSubmit, errors } = useForm({
         [CreateFormKeys.Name]: '',
         [CreateFormKeys.Ingredients]: '',

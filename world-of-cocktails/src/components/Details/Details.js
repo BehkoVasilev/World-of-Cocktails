@@ -9,16 +9,16 @@ import { cocktailServiceFactory } from "../../services/cocktailService";
 
 import { AddComment } from "./AddComment/AddComment";
 import { AddLike } from "./AddLike/AddLike";
+import { CocktailContext } from "../../contexts/CocktailContext";
 
-export const Details = ({
-    onDeleteClick
-}) => {
+export const Details = () => {
     const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
     const [cocktail, setCocktail] = useState({
         likes: 0,
         likedUsers: []
     });
     const { cocktailId } = useParams();
+    const { onDeleteClick } = useContext(CocktailContext);
 
     const cocktailService = useService(cocktailServiceFactory);
 
