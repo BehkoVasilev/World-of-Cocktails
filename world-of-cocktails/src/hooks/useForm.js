@@ -7,7 +7,7 @@ export const useForm = (initialValues, onSubmitHandler) => {
 
     const validateForm = () => {
         const validationErrors = {};
-        if (values.password !== values.repassword) {
+        if (values.repassword && values.password !== values.repassword) {
             validationErrors[RegisterFormKeys.RePassword] = 'Passwords do not match';
         }
         Object.entries(values).forEach(([key, value]) => {
@@ -31,7 +31,7 @@ export const useForm = (initialValues, onSubmitHandler) => {
 
         const validationErrors = validateForm();
         setErrors(validationErrors);
-
+        
         if (isValid(validationErrors)) {
             onSubmitHandler(values);
             setValues(initialValues);

@@ -10,16 +10,14 @@ const LoginFormKeys = {
 };
 
 export const Login = () => {
-    const { onLoginSubmit, showForm, setShowForm } = useContext(AuthContext);
-
+    const { onLoginSubmit, showForm, setShowForm, authError, setAuthError } = useContext(AuthContext);
+    
     const navigate = useNavigate();
 
-    const { values, changeHandler, onSubmit, errors } = useForm(
-        {
+    const { values, changeHandler, onSubmit, errors } = useForm({
             [LoginFormKeys.Email]: '',
             [LoginFormKeys.Password]: '',
-        },
-        onLoginSubmit
+        },onLoginSubmit
     );
 
     const loginFormRef = useRef();
@@ -28,6 +26,7 @@ export const Login = () => {
         const handleClickOutside = (event) => {
             if (loginFormRef.current && !loginFormRef.current.contains(event.target)) {
                 setShowForm(!showForm);
+                setAuthError({});
                 navigate('/');
             }
         };
@@ -44,7 +43,7 @@ export const Login = () => {
             {showForm && (
                 <form method='POST' onSubmit={onSubmit}>
                     <h3>Login</h3>
-
+                    {authError.login && <span style={{color: 'red', fontWeight: '900'}}>{authError.login}</span>}
                     <label htmlFor="username">Email</label>
                     <input
                         type="text"

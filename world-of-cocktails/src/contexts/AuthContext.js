@@ -11,6 +11,7 @@ export const AuthProvider = ({
     const [auth, setAuth] = useLocalStorage('auth', {});
 
     const [showForm, setShowForm] = useState(true);
+    const [authError, setAuthError] = useState({});
 
     const authService = authServiceFactory(auth.accessToken);
     const navigate = useNavigate();
@@ -20,10 +21,9 @@ export const AuthProvider = ({
             const result = await authService.login(data);
 
             setAuth(result);
-
             navigate('/')
         } catch (error) {
-            console.log(error);
+            setAuthError({ login: error });
         }
     };
 
@@ -31,6 +31,7 @@ export const AuthProvider = ({
         await authService.logout();
 
         setAuth({});
+        setAuthError({})
         localStorage.clear();
     }
 
@@ -48,7 +49,7 @@ export const AuthProvider = ({
 
             navigate('/')
         } catch (error) {
-            console.log(error.error.message);
+            setAuthError({ register: error });
         }
     };
 
@@ -62,6 +63,8 @@ export const AuthProvider = ({
         isAuthenticated: !!auth.accessToken,
         showForm,
         setShowForm,
+        authError,
+        setAuthError
     };
 
     return (

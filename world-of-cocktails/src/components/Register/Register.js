@@ -11,7 +11,7 @@ export const RegisterFormKeys = {
 }
 
 export const Register = () => {
-    const { onRegisterSubmit, showForm, setShowForm } = useContext(AuthContext);
+    const { onRegisterSubmit, showForm, setShowForm, authError, setAuthError } = useContext(AuthContext);
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         [RegisterFormKeys.Email]: '',
@@ -26,6 +26,7 @@ export const Register = () => {
         const handleClickOutside = (e) => {
             if (registerFormRef.current && !registerFormRef.current.contains(e.target)) {
                 setShowForm(!showForm);
+                setAuthError({})
                 navigate('/');
             }
         };
@@ -36,12 +37,11 @@ export const Register = () => {
             document.removeEventListener('click', handleClickOutside)
         }
     }, [registerFormRef])
-
     return (
         <div className={styles.registerForm} ref={registerFormRef}>
             <form method="POST" onSubmit={onSubmit}>
                 <h3>Register Here</h3>
-
+                {authError.register && <span style={{ color: 'red', fontWeight: '900' }}>{authError.register}</span>}
                 <label htmlFor="username">Email</label>
                 <input
                     type="text"
@@ -51,7 +51,8 @@ export const Register = () => {
                     value={values[RegisterFormKeys.Email] || ''}
                     onChange={changeHandler}
                 />
-                {errors[RegisterFormKeys.Email] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.Email]}</span>}
+                {values[RegisterFormKeys.Email].length < 5 && 'Must contain more than 5 character'}
+                {errors[RegisterFormKeys.Email] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[RegisterFormKeys.Email]}</span>}
 
                 <label htmlFor="password">Password</label>
                 <input
@@ -62,7 +63,7 @@ export const Register = () => {
                     value={values[RegisterFormKeys.Password] || ''}
                     onChange={changeHandler}
                 />
-                {errors[RegisterFormKeys.Password] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.Password]}</span>}
+                {errors[RegisterFormKeys.Password] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[RegisterFormKeys.Password]}</span>}
 
 
                 <label htmlFor="password">Confirm Password</label>
@@ -74,7 +75,7 @@ export const Register = () => {
                     value={values[RegisterFormKeys.RePassword] || ''}
                     onChange={changeHandler}
                 />
-                {errors[RegisterFormKeys.RePassword] && <span style={{color: 'red', fontWeight: '900'}}>{errors[RegisterFormKeys.RePassword]}</span>}
+                {errors[RegisterFormKeys.RePassword] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[RegisterFormKeys.RePassword]}</span>}
 
 
                 <button>Register</button>

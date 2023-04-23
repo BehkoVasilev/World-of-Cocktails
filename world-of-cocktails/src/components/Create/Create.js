@@ -71,7 +71,7 @@ export const Create = ({
                         onChange={changeHandler}
 
                     />
-                    {errors[CreateFormKeys.Ingredients] && <span className="error" style={{ color: 'red', fontWeight: '900' }}>{errors[CreateFormKeys.Ingredients]}</span>}
+                    {errors[CreateFormKeys.Ingredients] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[CreateFormKeys.Ingredients]}</span>}
 
                     <label htmlFor="summary">Preparation:</label>
                     <textarea
