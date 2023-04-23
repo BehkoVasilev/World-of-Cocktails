@@ -19,7 +19,7 @@ export const Edit = ({
     const { cocktailId } = useParams();
     const cocktailService = useService(cocktailServiceFactory);
 
-    const { values, changeHandler, onSubmit, changeValues } = useForm({
+    const { values, changeHandler, onSubmit, changeValues, errors } = useForm({
         _id: '',
         [EditFormKeys.Name]: '',
         [EditFormKeys.Ingredients]: '',
@@ -29,9 +29,9 @@ export const Edit = ({
 
     useEffect(() => {
         cocktailService.getOne(cocktailId)
-            .then(res => 
+            .then(res =>
                 changeValues(res));
-    }, [cocktailId, changeValues, cocktailService])
+    }, [cocktailId])
 
     return (
         <section id="create-page" className={styles.createForm}>
@@ -48,6 +48,10 @@ export const Edit = ({
                         value={values[EditFormKeys.Name] || ''}
                         onChange={changeHandler}
                     />
+                    {errors[EditFormKeys.Name] &&
+                        <span style={{ color: 'red', fontWeight: '900' }}>
+                            {errors[EditFormKeys.Name]}
+                        </span>}
 
                     <label htmlFor="category">Needed Ingredients:</label>
                     <input
@@ -58,6 +62,10 @@ export const Edit = ({
                         value={values[EditFormKeys.Ingredients] || ''}
                         onChange={changeHandler}
                     />
+                    {errors[EditFormKeys.Ingredients] &&
+                        <span style={{ color: 'red', fontWeight: '900' }}>
+                            {errors[EditFormKeys.Ingredients]}
+                        </span>}
 
                     <label htmlFor="summary">Preparation:</label>
                     <textarea
@@ -66,7 +74,12 @@ export const Edit = ({
                         placeholder="Enter preparation method..."
                         value={values[EditFormKeys.Preaparation] || ''}
                         onChange={changeHandler}
+                        style={{ resize: 'none' }}
                     ></textarea>
+                    {errors[EditFormKeys.Preaparation] &&
+                        <span style={{ color: 'red', fontWeight: '900' }}>
+                            {errors[EditFormKeys.Preaparation]}
+                        </span>}
 
                     <label htmlFor="cocktail-img">Image:</label>
                     <input
@@ -77,6 +90,10 @@ export const Edit = ({
                         value={values[EditFormKeys.ImageUrl] || ''}
                         onChange={changeHandler}
                     />
+                    {errors[EditFormKeys.ImageUrl] &&
+                        <span style={{ color: 'red', fontWeight: '900' }}>
+                            {errors[EditFormKeys.ImageUrl]}
+                        </span>}
 
                     <input className="btnSubmit" type="submit" value="Edit cocktail" />
                 </div>
