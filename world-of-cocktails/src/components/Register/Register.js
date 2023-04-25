@@ -44,14 +44,14 @@ export const Register = () => {
                 {authError.register && <span style={{ color: 'red', fontWeight: '900' }}>{authError.register}</span>}
                 <label htmlFor="username">Email</label>
                 <input
-                    type="text"
-                    placeholder="Email"
+                    type="email"
+                    placeholder="admin@abv.bg"
                     name={RegisterFormKeys.Email}
                     className="registerField"
                     value={values[RegisterFormKeys.Email] || ''}
                     onChange={changeHandler}
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 />
-                {values[RegisterFormKeys.Email].length < 5 && 'Must contain more than 5 character'}
                 {errors[RegisterFormKeys.Email] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[RegisterFormKeys.Email]}</span>}
 
                 <label htmlFor="password">Password</label>
@@ -62,9 +62,10 @@ export const Register = () => {
                     className="registerField"
                     value={values[RegisterFormKeys.Password] || ''}
                     onChange={changeHandler}
+                    pattern="[0-9a-zA-Z><?@+'`~^%&\*\[\]\{\}.!#|\\\$';,:;=\/\(\),\-]{8,}"
                 />
+                {values[RegisterFormKeys.Password].length < 8 && 'Must contain at least of 8 characters including a number, a letter and a special character'}
                 {errors[RegisterFormKeys.Password] && <span style={{ color: 'red', fontWeight: '900' }}>{errors[RegisterFormKeys.Password]}</span>}
-
 
                 <label htmlFor="password">Confirm Password</label>
                 <input

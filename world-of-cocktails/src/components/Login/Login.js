@@ -47,7 +47,7 @@ export const Login = () => {
                     <label htmlFor="username">Email</label>
                     <input
                         type="text"
-                        placeholder="Email..."
+                        placeholder="admin@abv.bg"
                         name={LoginFormKeys.Email}
                         className="loginField"
                         value={values[LoginFormKeys.Email] || ''}
