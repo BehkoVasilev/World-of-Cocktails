@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../hooks/useContexts";
 
 export const Home = () => {
-    const { showForm, setShowForm } = useContext(AuthContext);
+    const { showForm, setShowForm } = useAuthContext();
     return (
         <div id="templatemo_content">
             <h1 className="title">Share Your Favorite Cocktail</h1>

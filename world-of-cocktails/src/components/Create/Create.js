@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-import { useContext } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
 import { useForm } from '../../hooks/useForm';
 import styles from './Create.module.css';
-import { CocktailContext } from '../../contexts/CocktailContext';
+import { useAuthContext, useCocktailContext } from '../../hooks/useContexts';
 
 const CreateFormKeys = {
     Name: 'name',
@@ -15,8 +13,8 @@ const CreateFormKeys = {
 }
 
 export const Create = () => {
-    const { showForm, setShowForm } = useContext(AuthContext);
-    const { onCreateCocktailSubmit } = useContext(CocktailContext);
+    const { showForm, setShowForm } = useAuthContext();
+    const { onCreateCocktailSubmit } = useCocktailContext();
     const { values, changeHandler, onSubmit, errors } = useForm({
         [CreateFormKeys.Name]: '',
         [CreateFormKeys.Ingredients]: '',

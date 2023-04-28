@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../hooks/useContexts";
 
 // import "./Header.css";
 
 export const Header = () => {
-    const { isAuthenticated, userEmail, setShowForm, showForm } = useContext(AuthContext);
+    const { isAuthenticated, userEmail, setShowForm, showForm } = useAuthContext();
 
     return (
         <header id="templatemo_header">

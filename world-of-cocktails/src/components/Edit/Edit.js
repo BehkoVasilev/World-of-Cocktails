@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useService } from '../../hooks/useService';
 import { cocktailServiceFactory } from '../../services/cocktailService';
 import styles from '../Create/Create.module.css';
-import { CocktailContext } from '../../contexts/CocktailContext';
+import { useCocktailContext } from '../../hooks/useContexts';
 
 const EditFormKeys = {
     Name: 'name',
@@ -17,7 +17,7 @@ export const Edit = () => {
 
     const { cocktailId } = useParams();
     const cocktailService = useService(cocktailServiceFactory);
-    const { onEditCocktailSubmit } = useContext(CocktailContext);
+    const { onEditCocktailSubmit } = useCocktailContext();
 
     const { values, changeHandler, onSubmit, changeValues, errors } = useForm({
         _id: '',

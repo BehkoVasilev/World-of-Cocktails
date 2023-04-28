@@ -1,8 +1,9 @@
 import styles from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useRef, useEffect } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useRef, useEffect } from 'react';
+
 import { useForm } from '../../hooks/useForm';
+import { useAuthContext } from '../../hooks/useContexts';
 
 const LoginFormKeys = {
     Email: 'email',
@@ -10,7 +11,7 @@ const LoginFormKeys = {
 };
 
 export const Login = () => {
-    const { onLoginSubmit, showForm, setShowForm, authError, setAuthError } = useContext(AuthContext);
+    const { onLoginSubmit, showForm, setShowForm, authError, setAuthError } = useAuthContext();
     
     const navigate = useNavigate();
 

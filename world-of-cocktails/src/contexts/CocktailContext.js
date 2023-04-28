@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { cocktailServiceFactory } from '../services/cocktailService';
-import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useContexts";
 
 export const CocktailContext = createContext();
 
 export const CocktailContextProvider = ({ children }) => {
     const [cocktails, setCocktails] = useState([]);
-    const { token } = useContext(AuthContext);
+    const { token } = useAuthContext();
 
     const navigate = useNavigate();
     const cocktailService = cocktailServiceFactory(token);

@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as likeService from "../../services/likeService";
 
 import styles from "./Catalog.module.css";
-import { CocktailContext } from "../../contexts/CocktailContext";
+import { useCocktailContext } from "../../hooks/useContexts";
 
 export const Catalog = () => {
-    const { cocktails } = useContext(CocktailContext);
+    const { cocktails } = useCocktailContext();
     
     const [cocktailsWithLikes, setCocktailsWithLikes] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");

@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
-import { AuthContext } from "../../contexts/AuthContext";
 import { useService } from "../../hooks/useService";
 import * as commentSetvice from "../../services/commentService";
 import * as likeService from "../../services/likeService";
@@ -9,16 +8,16 @@ import { cocktailServiceFactory } from "../../services/cocktailService";
 
 import { AddComment } from "./AddComment/AddComment";
 import { AddLike } from "./AddLike/AddLike";
-import { CocktailContext } from "../../contexts/CocktailContext";
+import { useAuthContext, useCocktailContext } from "../../hooks/useContexts";
 
 export const Details = () => {
-    const { userId, isAuthenticated, userEmail } = useContext(AuthContext);
+    const { userId, isAuthenticated, userEmail } = useAuthContext();
     const [cocktail, setCocktail] = useState({
         likes: 0,
         likedUsers: []
     });
     const { cocktailId } = useParams();
-    const { onDeleteClick } = useContext(CocktailContext);
+    const { onDeleteClick } = useCocktailContext();
 
     const cocktailService = useService(cocktailServiceFactory);
 

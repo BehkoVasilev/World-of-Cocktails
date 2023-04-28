@@ -1,8 +1,8 @@
 import styles from './Register.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useRef } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useEffect, useRef } from 'react';
 import { useForm } from '../../hooks/useForm';
+import { useAuthContext } from '../../hooks/useContexts';
 
 export const RegisterFormKeys = {
     Email: 'email',
@@ -11,7 +11,7 @@ export const RegisterFormKeys = {
 }
 
 export const Register = () => {
-    const { onRegisterSubmit, showForm, setShowForm, authError, setAuthError } = useContext(AuthContext);
+    const { onRegisterSubmit, showForm, setShowForm, authError, setAuthError } = useAuthContext();
 
     const { values, changeHandler, onSubmit, errors } = useForm({
         [RegisterFormKeys.Email]: '',
