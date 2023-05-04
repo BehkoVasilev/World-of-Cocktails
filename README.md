@@ -1,2 +1,2 @@
 # World-of-Cocktails
-SoftUni
+Exam Project
